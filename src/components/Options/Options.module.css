@@ -1,0 +1,16 @@
+.options {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.optionsBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 55px;
+  border: 1px solid #a19898;
+  font-size: 20px;
+  text-transform: capitalize;
+}

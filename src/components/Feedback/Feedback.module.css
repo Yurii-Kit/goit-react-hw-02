@@ -1,0 +1,11 @@
+.feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: start;
+}
+.feedbackItem {
+  margin-bottom: 0;
+  font-size: 25px;
+  font-weight: 500;
+}
