@@ -1,6 +1,6 @@
 import css from './Options.module.css';
 
-function Options({ names, onFeedback }) {
+function Options({ names, onFeedback, clicks, reset }) {
   return (
     <div className={css.options}>
       {names.map((name, index) => (
@@ -12,6 +12,16 @@ function Options({ names, onFeedback }) {
           {name}
         </button>
       ))}
+      {clicks ? (
+        <button
+          className={css.optionsBtn}
+          onClick={() => {
+            reset();
+          }}
+        >
+          Reset
+        </button>
+      ) : null}
     </div>
   );
 }

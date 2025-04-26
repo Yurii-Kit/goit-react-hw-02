@@ -2,6 +2,7 @@ import './App.css';
 import Description from '../Description/Description.jsx';
 import Options from '../Options/Options.jsx';
 import Feedback from '../Feedback/Feedback.jsx';
+import Notification from '../Notification/Notification.jsx';
 import { useState } from 'react';
 
 function App() {
@@ -24,14 +25,27 @@ function App() {
     0,
   );
 
+  const resetRespondType = () => {
+    setRespondType({
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    });
+  };
+
   return (
     <>
       <Description />
-      <Options names={respondTypeName} onFeedback={updateFeedback} />
+      <Options
+        names={respondTypeName}
+        onFeedback={updateFeedback}
+        clicks={totalFeedback}
+        reset={resetRespondType}
+      />
       {totalFeedback > 0 ? (
         <Feedback nameValue={respondType} />
       ) : (
-        <p className="feedback">No feedback yet</p>
+        <Notification />
       )}
     </>
   );
