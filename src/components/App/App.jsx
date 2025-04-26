@@ -3,15 +3,26 @@ import Description from '../Description/Description.jsx';
 import Options from '../Options/Options.jsx';
 import Feedback from '../Feedback/Feedback.jsx';
 import Notification from '../Notification/Notification.jsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const [respondType, setRespondType] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const [respondType, setRespondType] = useState(() => {
+    const savedRespondType = window.localStorage.getItem('feedback');
+    if (savedRespondType !== null) {
+      return JSON.parse(savedRespondType);
+    }
+    return {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    };
   });
-  const respondTypeName = Object.keys(respondType);
+
+  useEffect(() => {
+    window.localStorage.setItem('feedback', JSON.stringify(respondType));
+  }, [respondType]);
+
+  const respondTypeNames = Object.keys(respondType);
 
   const updateFeedback = (feedbackType) => {
     setRespondType((State) => ({
@@ -24,6 +35,7 @@ function App() {
     (acc, value) => acc + value,
     0,
   );
+  const positiveFeedback = Math.round((respondType.good / totalFeedback) * 100);
 
   const resetRespondType = () => {
     setRespondType({
@@ -37,13 +49,17 @@ function App() {
     <>
       <Description />
       <Options
-        names={respondTypeName}
+        names={respondTypeNames}
         onFeedback={updateFeedback}
         clicks={totalFeedback}
         reset={resetRespondType}
       />
       {totalFeedback > 0 ? (
-        <Feedback nameValue={respondType} />
+        <Feedback
+          nameValue={respondType}
+          totalFeedback={totalFeedback}
+          positiveFeedback={positiveFeedback}
+        />
       ) : (
         <Notification />
       )}
